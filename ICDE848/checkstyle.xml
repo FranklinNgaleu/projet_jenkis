@@ -3,6 +3,54 @@
   "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
   "https://checkstyle.org/dtds/configuration_1_3.dtd">
 
+<module name="Checker">
+    <property name="severity" value="warning"/>
+    <property name="fileExtensions" value="java"/>
+
+    <!-- Ligne max 120 caractères -->
+    <module name="LineLength">
+        <property name="max" value="120"/>
+    </module>
+
+    <module name="TreeWalker">
+
+        <!-- NOMMAGE -->
+        <module name="TypeName"/>
+        <module name="MethodName"/>
+        <module name="LocalVariableName"/>
+        <module name="ConstantName"/>
+
+        <!-- LONGUEUR -->
+        <module name="MethodLength">
+            <property name="max" value="50"/>
+        </module>
+
+        <module name="ParameterNumber">
+            <property name="max" value="7"/>
+        </module>
+
+        <!-- QUALITÉ DE CODE -->
+        <module name="EmptyCatchBlock"/>
+        <module name="UnusedImports"/>
+        <module name="AvoidStarImport"/>
+        <module name="EqualsHashCode"/>
+        <module name="ParameterAssignment"/>
+
+        <!-- ACCOLADES -->
+        <module name="NeedBraces"/>
+        <module name="LeftCurly"/>
+        <module name="RightCurly"/>
+
+    </module>
+</module>
+
+
+
+<!-- <?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+  "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+  "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
 <!--
     Configuration Checkstyle – ICDE848 TP Jenkins
     Placer ce fichier à la RACINE du projet (même niveau que pom.xml)
@@ -87,7 +135,7 @@
 
     </module>
 
-</module>
+</module> -->
 
 <!--
 ═══════════════════════════════════════════════════════
