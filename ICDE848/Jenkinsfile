@@ -391,26 +391,26 @@ pipeline {
 }
 
 
-post {
-    failure {
-        emailext(
-            subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-            body: """
-            Build échoué.
-            Projet : ${env.JOB_NAME}
-            Build : #${env.BUILD_NUMBER}
-            Branche: ${env.GIT_BRANCH}
-            URL : ${env.BUILD_URL}
-            """,
-            to: 'equipe-dev@monentreprise.fr',
-            attachLog: true
-        )
-        }
-        fixed {
-        emailext(
-        subject: "FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-        body: "Build stable : ${env.BUILD_URL}",
-        to: 'equipe-dev@monentreprise.fr'
-        )
-    }
-}
+// post {
+//     failure {
+//         emailext(
+//             subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+//             body: """
+//             Build échoué.
+//             Projet : ${env.JOB_NAME}
+//             Build : #${env.BUILD_NUMBER}
+//             Branche: ${env.GIT_BRANCH}
+//             URL : ${env.BUILD_URL}
+//             """,
+//             to: 'equipe-dev@monentreprise.fr',
+//             attachLog: true
+//         )
+//         }
+//         fixed {
+//         emailext(
+//         subject: "FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+//         body: "Build stable : ${env.BUILD_URL}",
+//         to: 'equipe-dev@monentreprise.fr'
+//         )
+//     }
+// }
