@@ -379,14 +379,11 @@ pipeline {
         always {
             echo "Pipeline terminée — statut : ${currentBuild.currentResult}"
         }
-
         failure {
-            echo 'Envoi email ignoré ou à configurer plus tard'
-        }
+            emailext(
+                subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """Le build a échoué.
 
-        fixed {
-            echo 'Build de nouveau stable'
-        }
     }
 }
 
