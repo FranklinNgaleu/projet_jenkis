@@ -246,7 +246,7 @@ pipeline {
 
     tools {
         maven 'Maven3'
-        jdk 'JDK17'   // décommente seulement si configuré dans Jenkins
+        jdk 'JDK17'
     }
 
     parameters {
@@ -379,35 +379,55 @@ pipeline {
         always {
             echo "Pipeline terminée — statut : ${currentBuild.currentResult}"
         }
+
+        success {
+            emailext(
+                subject: "✅ SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build a réussi 🎉
+
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+Branche : ${env.GIT_BRANCH}
+URL     : ${env.BUILD_URL}
+
+Consulter les logs : ${env.BUILD_URL}console
+                """,
+                to: 'equipe-dev@monentreprise.fr'
+            )
+        }
+
         failure {
             emailext(
-                subject: "❌ FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                body: """Le build a échoué.
+                subject: "❌ FAILURE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build a échoué ❌
 
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+Branche : ${env.GIT_BRANCH}
+URL     : ${env.BUILD_URL}
+
+Consulter les logs : ${env.BUILD_URL}console
+                """,
+                to: 'franklin.tchokodjeu@institutsaintjean.org',
+                attachLog: true
+            )
+        }
+
+        unstable {
+            emailext(
+                subject: "⚠️ UNSTABLE: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: """
+Le build est instable ⚠️
+
+Projet  : ${env.JOB_NAME}
+Build   : #${env.BUILD_NUMBER}
+Branche : ${env.GIT_BRANCH}
+URL     : ${env.BUILD_URL}
+                """,
+                to: 'franklin.tchokodjeu@institutsaintjean.org'
+            )
+        }
     }
 }
-
-
-// post {
-//     failure {
-//         emailext(
-//             subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-//             body: """
-//             Build échoué.
-//             Projet : ${env.JOB_NAME}
-//             Build : #${env.BUILD_NUMBER}
-//             Branche: ${env.GIT_BRANCH}
-//             URL : ${env.BUILD_URL}
-//             """,
-//             to: 'equipe-dev@monentreprise.fr',
-//             attachLog: true
-//         )
-//         }
-//         fixed {
-//         emailext(
-//         subject: "FIXED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-//         body: "Build stable : ${env.BUILD_URL}",
-//         to: 'equipe-dev@monentreprise.fr'
-//         )
-//     }
-// }
